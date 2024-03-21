@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuanLib.Commands", "QuanLib.Commands\QuanLib.Commands.csproj", "{159288E2-DB18-463E-9B3B-FE6EEFEEDAE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuanLib.Commands", "QuanLib.Commands\QuanLib.Commands.csproj", "{159288E2-DB18-463E-9B3B-FE6EEFEEDAE4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuanLib.Core", "..\QuanLib\QuanLib.Core\QuanLib.Core.csproj", "{CA1FCC03-85DA-4E81-B74B-6DA09DB27BD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{159288E2-DB18-463E-9B3B-FE6EEFEEDAE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{159288E2-DB18-463E-9B3B-FE6EEFEEDAE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{159288E2-DB18-463E-9B3B-FE6EEFEEDAE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA1FCC03-85DA-4E81-B74B-6DA09DB27BD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA1FCC03-85DA-4E81-B74B-6DA09DB27BD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA1FCC03-85DA-4E81-B74B-6DA09DB27BD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA1FCC03-85DA-4E81-B74B-6DA09DB27BD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
