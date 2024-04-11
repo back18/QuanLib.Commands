@@ -25,6 +25,8 @@ namespace QuanLib.Commands
 
         public IdentifierNode? ParentNode { get; private set; }
 
+        public IdentifierNode? RootNode => ParentNode is not null ? ParentNode.RootNode : this;
+
         public IdentifierNode[] GetChildNodes()
         {
             return _childNodes.Values.ToArray();
