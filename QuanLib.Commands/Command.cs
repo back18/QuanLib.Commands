@@ -24,6 +24,17 @@ namespace QuanLib.Commands
 
         public PrivilegeLevel PrivilegeLevel { get; }
 
+        public object? Execute(CommandSender commandSender, params string[] args)
+        {
+            ArgumentNullException.ThrowIfNull(commandSender, nameof(commandSender));
+            ArgumentNullException.ThrowIfNull(args, nameof(args));
+
+            if (commandSender.PrivilegeLevel > PrivilegeLevel)
+                throw new UnauthorizedAccessException("命令发送人的权限等级低于命令要求的权限等级");
+
+            return CommandFunction.Execute(args);
+        }
+
         public override string ToString()
         {
             return Identifier.ToString();
