@@ -1,5 +1,4 @@
-﻿using QuanLib.Commands.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -40,7 +39,7 @@ namespace QuanLib.Commands
             }
             catch (Exception ex)
             {
-                throw new CommandException(null, ex);
+                throw new AggregateException("命令执行过程中引发了异常", ex);
             }
         }
     }

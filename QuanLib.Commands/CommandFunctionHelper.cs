@@ -1,5 +1,4 @@
-﻿using QuanLib.Commands.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -13,7 +12,7 @@ namespace QuanLib.Commands
         public static object[] ParseArguments(ICommandFunction commandFunction, params string[] args)
         {
             if (args.Length != commandFunction.Arguments.Count)
-                throw new CommandArgumentCountException(commandFunction.Arguments.Count, args.Length);
+                throw new ArgumentException($"命令预期参数数量为{commandFunction.Arguments.Count}，实际参数数量为{args.Length}");
 
             object[] result = new object[args.Length];
             for (int i = 0; i < args.Length; i++)
@@ -24,7 +23,7 @@ namespace QuanLib.Commands
                 }
                 catch (Exception ex)
                 {
-                    throw new CommandArgumentFormatException(commandFunction.Arguments[i], args[i], null, ex);
+                    throw new FormatException($"无法将命令参数“{args[i]}”解析为“{commandFunction.Arguments[i].Type}”类型", ex);
                 }
             }
 
