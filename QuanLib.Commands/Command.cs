@@ -8,7 +8,7 @@ namespace QuanLib.Commands
 {
     public class Command
     {
-        public Command(CommandIdentifier identifier, ICommandFunction commandFunction, PrivilegeLevel privilegeLevel)
+        public Command(CommandIdentifier identifier, ICommandFunction commandFunction, PrivilegeLevel privilegeLevel, Func<object?, string>? formatMessageHandler = null)
         {
             ArgumentNullException.ThrowIfNull(identifier, nameof(identifier));
             ArgumentNullException.ThrowIfNull(commandFunction, nameof(commandFunction));
@@ -16,7 +16,10 @@ namespace QuanLib.Commands
             Identifier = identifier;
             CommandFunction = commandFunction;
             PrivilegeLevel = privilegeLevel;
+            _formatMessage = formatMessageHandler ?? FormatMessage;
         }
+
+        private readonly Func<object?, string> _formatMessage;
 
         public CommandIdentifier Identifier { get; }
 
@@ -24,7 +27,7 @@ namespace QuanLib.Commands
 
         public PrivilegeLevel PrivilegeLevel { get; }
 
-        public object? Execute(CommandSender commandSender, params string[] args)
+        public string Execute(CommandSender commandSender, params string[] args)
         {
             ArgumentNullException.ThrowIfNull(commandSender, nameof(commandSender));
             ArgumentNullException.ThrowIfNull(args, nameof(args));
@@ -32,12 +35,17 @@ namespace QuanLib.Commands
             if (commandSender.PrivilegeLevel > PrivilegeLevel)
                 throw new UnauthorizedAccessException("命令发送人的权限等级低于命令要求的权限等级");
 
-            return CommandFunction.Execute(args);
+            return _formatMessage.Invoke(CommandFunction.Execute(args));
         }
 
         public override string ToString()
         {
             return Identifier.ToString();
+        }
+
+        private static string FormatMessage(object? obj)
+        {
+            return obj?.ToString() ?? string.Empty;
         }
     }
 }

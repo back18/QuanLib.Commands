@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuanLib.Commands", "QuanLib
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuanLib.Core", "..\QuanLib\QuanLib.Core\QuanLib.Core.csproj", "{CA1FCC03-85DA-4E81-B74B-6DA09DB27BD6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuanLib.Commands.CommandLine", "QuanLib.Commands.CommandLine\QuanLib.Commands.CommandLine.csproj", "{4D50EEE8-0A15-4739-B871-A4059532F711}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuanLib.Consoles", "..\QuanLib.Consoles\QuanLib.Consoles\QuanLib.Consoles.csproj", "{85EC15A4-BFFF-402B-AF25-2A54DBA42E80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{CA1FCC03-85DA-4E81-B74B-6DA09DB27BD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA1FCC03-85DA-4E81-B74B-6DA09DB27BD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA1FCC03-85DA-4E81-B74B-6DA09DB27BD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D50EEE8-0A15-4739-B871-A4059532F711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D50EEE8-0A15-4739-B871-A4059532F711}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D50EEE8-0A15-4739-B871-A4059532F711}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D50EEE8-0A15-4739-B871-A4059532F711}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85EC15A4-BFFF-402B-AF25-2A54DBA42E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85EC15A4-BFFF-402B-AF25-2A54DBA42E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85EC15A4-BFFF-402B-AF25-2A54DBA42E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85EC15A4-BFFF-402B-AF25-2A54DBA42E80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

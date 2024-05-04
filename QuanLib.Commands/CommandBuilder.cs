@@ -12,6 +12,7 @@ namespace QuanLib.Commands
         private CommandIdentifier? _identifier = null;
         private ICommandFunction? _commandFunction = null;
         private PrivilegeLevel _privilegeLevel = PrivilegeLevel.User;
+        private Func<object?, string>? _formatMessageHandler = null;
 
         public CommandBuilder On(string identifiers)
         {
@@ -59,12 +60,18 @@ namespace QuanLib.Commands
             return this;
         }
 
+        public CommandBuilder SetFormatMessageHandler(Func<object?, string>? formatMessageHandler)
+        {
+            _formatMessageHandler = formatMessageHandler;
+            return this;
+        }
+
         public Command Build()
         {
             ArgumentNullException.ThrowIfNull(_identifier, nameof(_identifier));
             ArgumentNullException.ThrowIfNull(_commandFunction, nameof(_commandFunction));
 
-            return new(_identifier, _commandFunction, _privilegeLevel);
+            return new(_identifier, _commandFunction, _privilegeLevel, _formatMessageHandler);
         }
     }
 }

@@ -25,14 +25,19 @@ namespace QuanLib.Commands
 
         public IdentifierNode? ParentNode { get; private set; }
 
-        public IdentifierNode? RootNode => ParentNode is not null ? ParentNode.RootNode : this;
+        public IdentifierNode RootNode => ParentNode is not null ? ParentNode.RootNode : this;
 
         public IdentifierNode[] GetChildNodes()
         {
             return _childNodes.Values.ToArray();
         }
 
-        public void AddChildNode(CommandIdentifier commandIdentifier)
+        public string[] GetChildNodeIdentifiers()
+        {
+            return _childNodes.Values.Select(s => s.Identifier).Order().ToArray();
+        }
+
+        internal void AddChildNode(CommandIdentifier commandIdentifier)
         {
             ArgumentNullException.ThrowIfNull(commandIdentifier, nameof(commandIdentifier));
 
@@ -46,7 +51,7 @@ namespace QuanLib.Commands
             }
         }
 
-        public void AddChildNode(string identifier)
+        internal void AddChildNode(string identifier)
         {
             IdentifierNode identifierNode = new(identifier)
             {

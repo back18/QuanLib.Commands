@@ -37,6 +37,10 @@ namespace QuanLib.Commands
             {
                 return _delegate.DynamicInvoke(arguments);
             }
+            catch (TargetInvocationException targetInvocationException) when (targetInvocationException.InnerException is not null)
+            {
+                throw new AggregateException("命令执行过程中引发了异常", targetInvocationException.InnerException);
+            }
             catch (Exception ex)
             {
                 throw new AggregateException("命令执行过程中引发了异常", ex);

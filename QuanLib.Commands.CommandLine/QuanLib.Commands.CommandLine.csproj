@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\QuanLib.Consoles\QuanLib.Consoles\QuanLib.Consoles.csproj" />
+    <ProjectReference Include="..\QuanLib.Commands\QuanLib.Commands.csproj" />
+  </ItemGroup>
+
+</Project>
