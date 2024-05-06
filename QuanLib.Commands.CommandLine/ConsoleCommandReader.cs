@@ -79,6 +79,28 @@ namespace QuanLib.Commands.CommandLine
             WriteText();
         }
 
+        protected override void OnKeyNotAvailable(ConsoleKeyReader sender, EventArgs e)
+        {
+            string text = ConsoleOutProxy.GetInterceptionText();
+            if (string.IsNullOrEmpty(text))
+                return;
+
+            ClearText();
+
+            ConsoleTextBuffer outputBuffer = new(_outputBuffer.InitialPosition);
+            outputBuffer.Write(text);
+            outputBuffer.ExpressionConsoleHeight(ConsoleOutProxy.WriteOnly);
+            outputBuffer.InitialPosition.Apply();
+            ConsoleOutProxy.WriteOnly(text);
+
+            if (Console.CursorLeft != 0)
+                ConsoleOutProxy.WriteLineOnly();
+
+            _textBuffer.SetInitialPosition(CursorPosition.Current.Offset(2, 0));
+
+            WriteText();
+        }
+
         protected override void WriteText()
         {
             CommandManager.TryGetValue(_wordCollection.GetIdentifier(), out var command);
@@ -115,15 +137,15 @@ namespace QuanLib.Commands.CommandLine
                 wordTexts.Add(ConsoleText.SpaceOfCurrentColor);
             }
 
-            _textBuffer.ExpressionConsoleHeight();
-            _textBuffer.InitialPosition.Offset(-2, 0).Apply();
+            _textBuffer.ExpressionConsoleHeight(ConsoleOutProxy.WriteOnly);
             _outputBuffer.Clear();
             _outputBuffer.SetInitialPosition(_textBuffer.InitialPosition.Offset(-2, 0));
+            _outputBuffer.InitialPosition.Apply();
 
             foreach (ConsoleText wordText in wordTexts)
             {
                 _outputBuffer.Write(wordText.Text);
-                wordText.WriteToConsole();
+                wordText.WriteToConsole(ConsoleOutProxy.WriteOnly);
             }
 
             int outputRemainingHeight = Console.BufferHeight - 1 - _outputBuffer.EndPosition.Y;
@@ -145,7 +167,7 @@ namespace QuanLib.Commands.CommandLine
 
             string whiteSpace = new(' ', _outputBuffer.Width);
             for (int i = 0; i < _outputBuffer.Height; i++)
-                Console.Write(whiteSpace);
+                ConsoleOutProxy.WriteOnly(whiteSpace);
 
             _textBuffer.CurrentPosition.Apply();
         }
@@ -161,7 +183,7 @@ namespace QuanLib.Commands.CommandLine
             {
                 _textBuffer.OffsetBuffer(-Console.CursorLeft, 1);
                 _outputBuffer.OffsetBuffer(-Console.CursorLeft, 1);
-                Console.WriteLine();
+                ConsoleOutProxy.WriteLineOnly();
             }
 
             _textBuffer.SetInitialPosition(CursorPosition.Current.Offset(2, 0));
@@ -175,12 +197,15 @@ namespace QuanLib.Commands.CommandLine
             ClearText();
             Update();
             WriteText();
+
+            ConsoleOutProxy.RequestInterception = true;
         }
 
         protected override void OnStopped(IRunnable sender, EventArgs e)
         {
+            ConsoleOutProxy.RequestInterception = false;
             _outputBuffer.EndPosition.Apply();
-            Console.WriteLine();
+            ConsoleOutProxy.WriteLineOnly();
         }
 
         private int GetSelectedIndex(int wordIndex, IndexRange preSelectedRange)
