@@ -56,20 +56,40 @@ namespace QuanLib.Commands
                 return null;
 
             //处理冗余标识符
-            if (context.CurrentWord is ErrorIdentifierWord || (context.Command is not null && context.ArgumentCount >= context.Command.CommandFunction.Arguments.Count))
+            if (context.CurrentWord is ErrorIdentifierWord)
             {
                 return new ErrorIdentifierWord(context.NextWordText, context.NextWordTextStartIndex)
                 {
-                    Exception = new FormatException("命令的标识符或参数的数量超过预期数量")
+                    Exception = new FormatException("命令的标识符的数量超过预期数量")
                 };
             }
 
             //处理命令标识符
-            if (context.CurrentWord is null or IdentifierWord && context.CurrentNode.TryGetChildNode(context.NextWordText, out var childNode))
+            if (context.CurrentWord is null or IdentifierWord)
             {
-                return new IdentifierWord(context.NextWordText, context.NextWordTextStartIndex, childNode)
+                if (context.CurrentNode.TryGetChildNode(context.NextWordText, out var childNode))
                 {
-                    AllowedTexts = context.CurrentNode.GetChildNodeIdentifiers().AsReadOnly()
+                    return new IdentifierWord(context.NextWordText, context.NextWordTextStartIndex, childNode)
+                    {
+                        AllowedTexts = context.CurrentNode.GetChildNodeIdentifiers().AsReadOnly()
+                    };
+                }
+
+                if (context.CurrentNode.GetChildNodeIdentifiers().Any(a => a.StartsWith(context.NextWordText, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return new ErrorIdentifierWord(context.NextWordText, context.NextWordTextStartIndex)
+                    {
+                        AllowedTexts = context.CurrentNode.GetChildNodeIdentifiers().AsReadOnly()
+                    };
+                }
+            }
+
+            //处理冗余命令参数
+            if (context.Command is not null && context.ArgumentCount >= context.Command.CommandFunction.Arguments.Count)
+            {
+                return new ErrorIdentifierWord(context.NextWordText, context.NextWordTextStartIndex)
+                {
+                    Exception = new FormatException("命令的参数的数量超过预期数量")
                 };
             }
 
@@ -92,7 +112,6 @@ namespace QuanLib.Commands
             }
 
             //处理其他情况
-
             return new ErrorIdentifierWord(context.NextWordText, context.NextWordTextStartIndex)
             {
                 AllowedTexts = context.CurrentNode.GetChildNodeIdentifiers().AsReadOnly()
