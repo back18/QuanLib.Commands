@@ -1,12 +1,10 @@
 ﻿using QuanLib.Commands.Words;
 using QuanLib.Consoles;
-using QuanLib.Consoles.Events;
 using QuanLib.Core;
+using QuanLib.Core.Events;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -71,10 +69,10 @@ namespace QuanLib.Commands.CommandLine
             return _result;
         }
 
-        protected override void OnKeyRead(ConsoleKeyReader sender, ConsoleKeyInfoEventArgs e)
+        protected override void OnKeyRead(ConsoleKeyReader sender, EventArgs<ConsoleKeyInfo> e)
         {
             ClearText();
-            HandleKeyEvent(e.ConsoleKeyInfo);
+            HandleKeyEvent(e.Argument);
             Update();
             WriteText();
         }
