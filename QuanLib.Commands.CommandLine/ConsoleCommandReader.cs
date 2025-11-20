@@ -12,7 +12,7 @@ namespace QuanLib.Commands.CommandLine
 {
     public class ConsoleCommandReader : ConsoleTextReader
     {
-        public ConsoleCommandReader(CommandManager commandManager, ILoggerGetter? loggerGetter = null) : base(loggerGetter)
+        public ConsoleCommandReader(CommandManager commandManager, ILoggerProvider? loggerProvider = null) : base(loggerProvider)
         {
             ArgumentNullException.ThrowIfNull(commandManager, nameof(commandManager));
 
